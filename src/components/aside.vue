@@ -1,7 +1,8 @@
 <template>
-  <el-menu :style="{ width: '230px' }" active-text-color="#ffd04b" background-color="#545c64" class="aside-container"
-    default-active="2" :collapse="headerStore.isCollapse" text-color="#fff" @open="handleOpen" @close="handleClose">
-    <p class="logo-lg">DIDI陪诊</p>
+  <el-menu :style="{ width: menuStore.isCollapse ? '64px' : '230px' }" active-text-color="#ffd04b"
+    background-color="#545c64" class="aside-container" default-active="2" :collapse="menuStore.isCollapse"
+    text-color="#fff" @open="handleOpen" @close="handleClose">
+    <p class="logo-lg">{{ menuStore.isCollapse ? 'DIDI' : 'DIDI陪诊' }}</p>
     <treeMenu index="1" :menuData="menuData"></treeMenu>
 
   </el-menu>
@@ -11,10 +12,9 @@
 import treeMenu from './treeMenu.vue';
 import { useRouter } from 'vue-router'
 import { reactive } from 'vue'
-import useHeaderStore from '../store/modules/header';
+import useMenuStore from '../store/modules/menu';
 // 获取小仓库对象
-let headerStore = useHeaderStore()
-
+let menuStore = useMenuStore()
 const router = useRouter()
 const menuData = reactive(router.options.routes[0].children)
 
@@ -38,10 +38,5 @@ const handleClose = () => {
     line-height: 50px;
     color: #fff;
   }
-}
-
-.aside-container:not(.el-menu--collapse) {
-  width: 200px;
-  min-height: 400px;
 }
 </style>

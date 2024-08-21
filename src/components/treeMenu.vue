@@ -1,5 +1,5 @@
 <template>
-  <div>
+    <!-- 不能加div，会导致折叠时文字仍然显示 -->
     <!-- <el-sub-menu index="1">
       <template #title>
         <el-icon>
@@ -57,16 +57,19 @@
         <treeMenu :index="`${props.index}-${item.meta.id}`" :menuData="item.children"></treeMenu>
       </el-sub-menu>
     </template>
-  </div>
+
 </template>
 <script setup>
 import { useRouter } from 'vue-router';
+import useMenuStore from '../store/modules/menu';
+let menuStore = useMenuStore()
 const props = defineProps(['menuData', 'index'])
 
 // 创建router实例
 const router = useRouter()
 // 点击菜单回调
 const handleClick = (item, active) => {
+  menuStore.addMenu(item.meta)
   router.push(item.meta.path)
 }
 </script>
